@@ -2,7 +2,7 @@ import openai
 import sys
 
 # Set up your OpenAI API credentials
-openai.api_key = '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'
+openai.api_key = ''
 
 
 def chat_completion(prompt):
