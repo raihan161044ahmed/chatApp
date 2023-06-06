@@ -3,7 +3,7 @@ from urllib.parse import parse_qs
 import json
 import openai
 
-openai.api_key = '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'
+openai.api_key = ''
 
 
 class ChatRequestHandler(BaseHTTPRequestHandler):
