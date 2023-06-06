@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Word Splitter</title>
+  <style>
+    body {
+      font-family:'Franklin Gothic Medium';
+    }
+
+    #inputWord {
+      margin-top: 30px;
+      margin-left: 20%;
+      height: 200px;
+      width: 750px;
+      margin-bottom: 10px;
+      border: 5px solid rgb(139, 206, 236);
+      font-size: 1.5em;
+    }
+
+    #outputDiv {
+      margin-top: 90px;
+      white-space: pre-wrap;
+      margin-left: 10%;
+      max-width: 80%;
+      font-size: 1.5em;
+    }
+    
+    .btn {
+      font-weight: bold;
+      font-size: 1.3em;
+      width: 90px;
+      height: 40px;
+      background-color: skyblue;
+      margin-left: 60%;
+      border-radius: 10px;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    function splitWordByWord() {
+      var word = document.getElementById("inputWord").value;
+      var words = word.split(" ");
+      var delay = 300; // 0.3 seconds
+
+      var outputObject = []; // Store words in an array object
+
+      for (var i = 0; i < words.length; i++) {
+        setTimeout(function (index) {
+          outputObject.push(words[index]);
+          document.getElementById("outputDiv").innerHTML = outputObject.join(" ");
+        }, delay * i, i);
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1 style="text-align: center;">Word Splitter</h1>
+  <textarea id="inputWord" placeholder="Enter a word"></textarea>
+  <br>
+  <button onclick="splitWordByWord()" class="btn">Split</button>
+  <div id="outputDiv"></div>
+</body>
+</html>

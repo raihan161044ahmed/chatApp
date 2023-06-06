@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Completion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .chat-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .user-message {
+            color: blue;
+        }
+
+        .assistant-message {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chat Completion</h1>
+    <div id="chat-log"></div>
+    <input type="text" id="user-input" placeholder="Enter your message">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        function sendMessage() {
+            var userInput = document.getElementById('user-input').value;
+            addMessage('user', userInput);
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'user_message': userInput
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var assistantReply = data.assistant_reply;
+                addMessage('assistant', assistantReply);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+            document.getElementById('user-input').value = '';
+        }
+
+        function addMessage(role, content) {
+            var chatLog = document.getElementById('chat-log');
+            var messageContainer = document.createElement('div');
+            messageContainer.className = 'chat-container';
+
+            var messageElement = document.createElement('span');
+            if (role === 'user') {
+                messageElement.className = 'user-message';
+                messageElement.textContent = 'User: ' + content;
+            } else if (role === 'assistant') {
+                messageElement.className = 'assistant-message';
+                messageElement.textContent = 'Assistant: ' + content;
+            }
+
+            messageContainer.appendChild(messageElement);
+            chatLog.appendChild(messageContainer);
+
+            // Scroll to the bottom of the chat log
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+    </script>
+</body>
+</html>
